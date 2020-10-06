@@ -41,6 +41,36 @@ class RenewMembershipBlock extends BlockBase implements ContainerFactoryPluginIn
     return $instance;
   }
 
+    /**
+   * Constructor.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
+   * @param \Drupal\transaction\TransactionServiceInterface $transaction_service
+   *   The transaction service.
+   */
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, TransactionServiceInterface $transaction_service) {
+    $this->entityTypeManager = $entity_type_manager;
+    $this->transactionService = $transaction_service;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCurrentState($entity, $transaction_type) {
+    if ($last_transaction = $this->transactionService->getLastExecutedTransaction($entity, $transaction_type)) {
+      $settings = $last_transaction->getType()->getPluginSettings();
+      return $last_transaction->get($settings['state'])->value;
+    }
+
+    return FALSE;
+  }
+
+
+  
+  
+  
+  
   /**
    * {@inheritdoc}
    */
