@@ -16,7 +16,7 @@ function bic_transactions_help($route_name, RouteMatchInterface $route_match) {
     case 'help.page.bic_transactions':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('The transactions for the TCM BiC site') . '</p>';
+      $output .= '<p>' . t('The transactions module for the credit membership system in the TCM BiC site') . '</p>';
       return $output;
 
     default:
