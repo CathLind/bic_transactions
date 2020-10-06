@@ -5,6 +5,18 @@ namespace Drupal\bic_transactions\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Form\FormBuilderInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\transaction\TransactionServiceInterface;
+use Drupal\transaction\Plugin\Transaction\BalanceTransactor;
+use Drupal\transaction\TransactionInterface;
+use Drupal\transaction\TransactionTypeInterface;
+use Drupal\user\Entity\Role;
+use Drupal\user\RoleInterface;
+
+
 
 /**
  * Provides a 'RenewMembershipBlock' block.
