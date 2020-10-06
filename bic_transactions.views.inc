@@ -19,21 +19,21 @@ function bic_transactions_views_data() {
 
     $data['views']['authenticate_group_member'] = [
         'title' => t('Authenticate group member'),
-        'help' => t('PHP Script for authenticate group member'),
+        'help' => t('Button for authenticate group member'),
         'field' => [
             'id' => 'authenticate_group_member',
         ],
     ];
     $data['views']['extend_group_membership'] = [
         'title' => t('Extend group membership'),
-        'help' => t('PHP script for extrending the membership for an active and existing member'),
+        'help' => t('Button for extending the membership for an active and existing member'),
         'field' => [
             'id' => 'extend_group_membership',
         ],
     ];
     $data['views']['renew_group_manager'] = [
         'title' => t('Renew group manager'),
-        'help' => t('PHP script for renewing the membership for a expried group manager'),
+        'help' => t('Button for renewing the membership for a expried group manager'),
         'field' => [
             'id' => 'renew_group_manager',
         ],
