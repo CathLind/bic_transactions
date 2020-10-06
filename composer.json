@@ -1,0 +1,13 @@
+{
+    "name": "bic_transactions",
+    "type": "drupal-module",
+    "description": "The transactions for the TCM BiC site",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/bic_transactions",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/bic_transactions",
+        "source": "http://cgit.drupalcode.org/bic_transactions",
+    },
+}

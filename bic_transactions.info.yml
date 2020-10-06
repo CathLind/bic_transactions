@@ -1,0 +1,5 @@
+name: 'BiC Transactions'
+type: module
+description: 'The transactions for the TCM BiC site'
+core: 8.x
+package: 'TCM'
