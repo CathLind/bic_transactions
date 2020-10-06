@@ -23,6 +23,15 @@ class RenewMembershipBlock extends BlockBase implements ContainerFactoryPluginIn
    */
   protected $currentUser;
 
+    /**
+   * The transaction service.
+   *
+   * @var \Drupal\transaction\TransactionServiceInterface
+   */
+  protected $transactionService;
+
+
+  
   /**
    * {@inheritdoc}
    */
