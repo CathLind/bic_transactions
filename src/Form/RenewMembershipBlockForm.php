@@ -39,3 +39,25 @@ class RenewMembershipBlockForm extends FormBase {
 
     return $form;
   }
+
+  
+    /**
+   * {@inheritdoc}
+   */
+  public function validateForm(FormStateInterface $form_state) {
+    $renewal = $form_state->getValue('renewal');
+    if (isEmpty($renewal)) {
+      $form_state->setErrorByName('renewal', $this->t('Please check the box before submitting your order.'));
+    }
+
+   }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitForm(FormStateInterface $form_state) {
+    
+  }
+
+}
+
