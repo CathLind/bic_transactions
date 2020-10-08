@@ -7,7 +7,6 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Form\FormBuilderInterface;
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\transaction\TransactionServiceInterface;
 use Drupal\transaction\Plugin\Transaction\BalanceTransactor;
@@ -69,11 +68,29 @@ class RenewMembershipBlock extends BlockBase implements ContainerFactoryPluginIn
    * {@inheritdoc}
    */
   public function build() {
-    $build = [];
-    $build['#theme'] = 'renew_membership_block';
-     $build['renew_membership_block']['#markup'] = 'Implement RenewMembershipBlock.';
-
-    return $build;
+ // Return the form @ Form/RenewMembershipBlockForm.php.
+    return \Drupal::formBuilder()->getForm('Drupal\bic_transactions\Form\RenewMembershipBlockForm');
   }
 
+  
+    /**
+   * {@inheritdoc}
+   */
+  public function blockForm($form, FormStateInterface $form_state) {
+
+    $form = parent::blockForm($form, $form_state);
+
+    $config = $this->getConfiguration();
+
+    return $form;
+  }
+  
+ /**
+   * {@inheritdoc}
+   */
+  public function blockSubmit($form, FormStateInterface $form_state) {
+    $this->setConfigurationValue('renew_membership_block_settings', $form_state->getValue('renew_membership_block_settings'));
+  }
+  
+  
 }
