@@ -4,13 +4,48 @@ namespace Drupal\bic_transactions\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Url;
+use Drupal\user\UserStorageInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\transaction\TransactionServiceInterface;
+use Drupal\transaction\Plugin\Transaction\BalanceTransactor;
+use Drupal\transaction\TransactionInterface;
+use Drupal\transaction\TransactionTypeInterface;
+use Drupal\user\Entity\Role;
+use Drupal\user\RoleInterface;
 
 /**
  * RenewMembershipBlock form
  */
 class RenewMembershipBlockForm extends FormBase {
+  
+  /**
+   * Drupal\Core\Session\AccountProxyInterface definition.
+   *
+   * @var \Drupal\Core\Session\AccountProxyInterface
+   */
+  protected $currentUser;
 
+    /**
+   * The transaction service.
+   *
+   * @var \Drupal\transaction\TransactionServiceInterface
+   */
+  protected $transactionService;
+
+  
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    $instance = new static($configuration, $plugin_id, $plugin_definition);
+    $instance->currentUser = $container->get('current_user');
+    return $instance;
+  }
+
+
+  
+  
   /**
    * {@inheritdoc}
    */
@@ -56,6 +91,21 @@ class RenewMembershipBlockForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(FormStateInterface $form_state) {
+    
+    
+    
+    
+/**
+ $target_user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+  if ($last_transaction = \Drupal::service('transaction')
+    ->getLastExecutedTransaction($target_user, 'userpoints_default_points')) {
+    $currentpoints = $last_transaction->get('field_userpoints_default_balance')->getString();
+  }
+**/
+  
+  
+  
+    
     
   }
 
