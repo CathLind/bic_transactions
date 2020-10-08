@@ -28,7 +28,7 @@ class RenewMembershipBlockForm extends FormBase {
       '#type' => 'checkbox',
       '#title' => $this
     ->t('Renew your subscription'),
-      '#description' => $this->t('When checking the box and clicking the button, 100 credits will be deducted from your account and your subscription will be renewed for 6 month.'),
+      '#description' => $this->t('When checking the box and clicking the button, 100 credits will be deducted from your account and your subscription will be renewed for 6 month. By checking the box you accept our terms of service.'),
     ];
 
     // Submit.
@@ -47,7 +47,7 @@ class RenewMembershipBlockForm extends FormBase {
   public function validateForm(FormStateInterface $form_state) {
     $renewal = $form_state->getValue('renewal');
     if (isEmpty($renewal)) {
-      $form_state->setErrorByName('renewal', $this->t('Please check the box before submitting your order.'));
+      $form_state->setErrorByName('renewal', $this->t('Please check the Renew-box before submitting your order.'));
     }
 
    }
