@@ -138,7 +138,9 @@ class RenewMembershipBlockForm extends FormBase {
     'field_userpoints_default_reason' => '6 month Subscription for Group Manager',
   ])->execute();
 
-  
+  /** Add correct role to current user **/
+    $current_user->addRole('group_mng');
+    $current_user->save();
   
   
    $form_state
