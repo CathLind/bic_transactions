@@ -27,13 +27,44 @@ class RenewMembershipBlockForm extends FormBase {
   protected $currentUser;
 
     /**
+   * User storage.
+   *
+   * @var \Drupal\user\UserStorageInterface
+   */
+  protected $userStorage;
+
+    /**
    * The transaction service.
    *
    * @var \Drupal\transaction\TransactionServiceInterface
    */
   protected $transactionService;
 
+    /**
+   * Create a user renewal block.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin_id for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\Core\Session\AccountProxyInterface $current_user
+   *   The current user object.
+   * @param \Drupal\user\UserStorageInterface $user_storage
+   *   The current user object.
+   * @param \Drupal\transaction\TransactionServiceInterface $transaction_service
+   *   The current user object.
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, AccountProxyInterface $current_user, UserStorageInterface $user_storage, TransactionServiceInterface $transaction_service) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->currentUser = $current_user;
+    $this->userStorage = $user_storage;
+    $this->transactionService = $transaction_service;
+  }
+
   
+
   /**
    * {@inheritdoc}
    */
@@ -59,6 +90,8 @@ class RenewMembershipBlockForm extends FormBase {
     // Checkbox for renewal of subscription
     $form['renewal'] = [
       '#type' => 'checkbox',
+      '#return_value' => 'renewed_subscription',
+      '#default_value' => NULL,
       '#title' => $this
     ->t('Renew your subscription'),
       '#description' => $this->t('When checking the box and clicking the button, 100 credits will be deducted from your account and your subscription will be renewed for 6 month. By checking the box you accept our terms of service.'),
@@ -90,7 +123,9 @@ class RenewMembershipBlockForm extends FormBase {
    */
   public function submitForm(array $form, FormStateInterface $form_state) {
     
-    
+  $account = $this->userStorage
+      ->load($form_state
+      ->get('uid'));  
     
     
 /**
@@ -103,7 +138,8 @@ class RenewMembershipBlockForm extends FormBase {
   
   
   
-    
+   $form_state
+      ->setRedirect('user.page'); 
     
   }
 
