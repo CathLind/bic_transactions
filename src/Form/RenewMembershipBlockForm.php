@@ -51,17 +51,11 @@ class RenewMembershipBlockForm extends FormBase {
    *   The plugin implementation definition.
    * @param \Drupal\Core\Session\AccountProxyInterface $current_user
    *   The current user object.
-   * @param \Drupal\user\UserStorageInterface $user_storage
-   *   The current user object.
-   * @param \Drupal\transaction\TransactionServiceInterface $transaction_service
-   *   The current user object.
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, AccountProxyInterface $current_user, UserStorageInterface $user_storage, TransactionServiceInterface $transaction_service) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->currentUser = $current_user;
-    $this->userStorage = $user_storage;
-    $this->transactionService = $transaction_service;
-  }
+     }
 
   
 
@@ -115,6 +109,17 @@ class RenewMembershipBlockForm extends FormBase {
     if (isEmpty($renewal)) {
       $form_state->setErrorByName('renewal', $this->t('Please check the Renew-box before submitting your order.'));
     }
+    
+     $target_user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+  if ($last_transaction = \Drupal::service('transaction')
+    ->getLastExecutedTransaction($target_user, 'userpoints_default_points')) {
+    $currentpoints = $last_transaction->get('field_userpoints_default_balance')->getString();
+  }
+
+  if ($currentpoints < 100){
+    $missingpoints = (100 - $currentpoints);
+    $form_state->setErrorByName('renewal', $this->t('Sorry, you do not have enough credits on your account to renew your subscription. Your account has ' $missingpoints 'credits. Please visit the store and buy the necessary credits.' ));
+  }
 
    }
 
@@ -123,18 +128,16 @@ class RenewMembershipBlockForm extends FormBase {
    */
   public function submitForm(array $form, FormStateInterface $form_state) {
     
-  $account = $this->userStorage
-      ->load($form_state
-      ->get('uid'));  
+  /** Deduct the credits from the user account.  */
     
-    
-/**
- $target_user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
-  if ($last_transaction = \Drupal::service('transaction')
-    ->getLastExecutedTransaction($target_user, 'userpoints_default_points')) {
-    $currentpoints = $last_transaction->get('field_userpoints_default_balance')->getString();
-  }
-**/
+  $target_user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+  \Drupal\transaction\Entity\Transaction::create([
+    'type' => 'userpoints_default_points',
+    'target_entity' => $target_user,
+    'field_userpoints_default_amount' => -100,
+    'field_userpoints_default_reason' => '6 month Subscription for Group Manager',
+  ])->execute();
+
   
   
   
