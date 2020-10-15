@@ -51,11 +51,7 @@ class ExtendGroupMembership extends FieldPluginBase {
    * {@inheritdoc}
    */
   public function render(ResultRow $values) {
-    // Return a random text, here you can include your custom logic.
-    // Include any namespace required to call the method required to generate
-    // the desired output.
-    $random = new Random();
-    return $random->name();
+    
   }
 
 }
